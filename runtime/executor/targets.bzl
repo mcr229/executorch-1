@@ -62,6 +62,7 @@ def define_common_targets():
                 "method_meta.h",
                 "program.h",
             ],
+            force_static = True,
             deps = [
                 "//executorch/kernels/prim_ops:prim_ops_registry" + aten_suffix,
                 "//executorch/runtime/backend:backend_registry",

@@ -16,6 +16,7 @@ def define_common_targets():
             "//executorch/...",
             "@EXECUTORCH_CLIENTS",
         ],
+        force_static = True,
         exported_deps = [
             "//executorch/runtime/core:core",
             "//executorch/runtime/core:evalue",

@@ -31,6 +31,7 @@ def define_common_targets(is_fbcode = False):
             # TestBackendCompilerLib.cpp needs to compile with executor as whole
             # @lint-ignore BUCKLINT: Avoid `link_whole=True` (https://fburl.com/avoid-link-whole)
             link_whole = True,
+            force_static = True,
         )
 
         runtime.cxx_library(

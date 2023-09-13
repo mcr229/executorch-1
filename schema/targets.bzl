@@ -132,6 +132,7 @@ def define_common_targets():
             "//executorch/runtime/executor/...",
             "//executorch/schema/test/...",
         ],
+        force_static = True,
         exported_deps = [
             "//executorch/runtime/core:core",
         ],

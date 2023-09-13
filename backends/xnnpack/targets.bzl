@@ -16,6 +16,7 @@ def define_common_targets():
             "//executorch/backends/xnnpack/...",
             "@EXECUTORCH_CLIENTS",
         ],
+        force_static = True,
     )
 
     runtime.genrule(
@@ -79,4 +80,7 @@ def define_common_targets():
         # XnnpackBackend.cpp needs to compile with executor as whole
         # @lint-ignore BUCKLINT: Avoid `link_whole=True` (https://fburl.com/avoid-link-whole)
         link_whole = True,
+        link_style = "static",
+        preferred_linkage = "static",
+        force_static = True,
     )

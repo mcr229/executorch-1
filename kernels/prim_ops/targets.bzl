@@ -15,6 +15,7 @@ def define_common_targets():
             srcs = ["et_copy_index.cpp"],
             visibility = [],  # Private
             exported_headers = ["et_copy_index.h"],
+            force_static = True,
             deps = [
                 "//executorch/runtime/kernel:kernel_includes" + aten_suffix,
             ],
@@ -33,6 +34,7 @@ def define_common_targets():
             ],
             # @lint-ignore BUCKLINT link_whole, need this to register prim ops.
             link_whole = True,
+            force_static = True,
             # prim ops are registered through a global table so the ctor needs to be allowed
             compiler_flags = ["-Wno-global-constructors"],
             deps = [

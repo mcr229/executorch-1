@@ -27,6 +27,7 @@ def define_common_targets():
             "//executorch/runtime/core/exec_aten/...",
             "//executorch/runtime/core/portable_type/test/...",
         ],
+        force_static = True,
         exported_deps = [
             ":scalar_type",
             "//executorch/runtime/core:core",

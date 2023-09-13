@@ -7,9 +7,6 @@ MODELS_ATEN_OPS_LEAN_MODE_GENERATED_LIB = [
 ]
 
 PORTABLE_MODULE_DEPS = [
-    "//caffe2:ATen",
-    "//caffe2:torch",
-    "//caffe2:torch_extension",
     "//executorch/runtime/kernel:operator_registry",
     "//executorch/runtime/executor:program",
     "//executorch/schema:bundled_program_schema",
@@ -21,7 +18,7 @@ PORTABLE_MODULE_DEPS = [
     "//executorch/util:test_memory_config",
     "//executorch/util:util",
     "//executorch/runtime/executor/test:test_backend_compiler_lib",
-] + get_all_cpu_backend_targets()
+] + ["//executorch/backends/xnnpack:xnnpack_backend"]
 
 ATEN_MODULE_DEPS = [
     "//executorch/runtime/kernel:operator_registry",
@@ -34,9 +31,6 @@ ATEN_MODULE_DEPS = [
     "//executorch/util:read_file",
     "//executorch/util:test_memory_config",
     "//executorch/util:bundled_program_verification_aten",
-    "//caffe2:torch",
-    "//caffe2:torch_extension",
-    "//caffe2:ATen",
     "//executorch/runtime/executor/test:test_backend_compiler_lib_aten",
 ]
 
@@ -63,6 +57,7 @@ def executorch_pybindings(python_module_name, srcs = [], cppdeps = [], visibilit
         ] + cppdeps,
         external_deps = [
             "pybind11",
+            "libtorch_python",
         ],
         use_static_deps = True,
         _is_external_target = bool(visibility != ["//executorch/..."]),

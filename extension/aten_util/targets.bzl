@@ -21,6 +21,7 @@ def define_common_targets():
             "-Wno-global-constructors",
             "-Wno-unused-function",
         ],
+        force_static = True,
         visibility = [
             "//executorch/...",
             "@EXECUTORCH_CLIENTS",
@@ -29,13 +30,7 @@ def define_common_targets():
             "//executorch/runtime/core:core",
             "//executorch/runtime/core/exec_aten:lib",
         ],
-        fbcode_deps = [
-            "//caffe2:ATen-core",
-            "//caffe2:ATen-cpu",
-            "//caffe2/c10:c10",
-        ],
-        xplat_deps = [
-            "//xplat/caffe2:torch_mobile_core",
-            "//xplat/caffe2/c10:c10",
+        external_deps = [
+            "libtorch",
         ],
     )

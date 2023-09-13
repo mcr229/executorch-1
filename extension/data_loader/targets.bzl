@@ -56,6 +56,7 @@ def define_common_targets():
         name = "mmap_data_loader",
         srcs = ["mmap_data_loader.cpp"],
         exported_headers = ["mmap_data_loader.h"],
+        force_static = True,
         visibility = [
             "//executorch/test/...",
             "//executorch/extension/pybindings/...",

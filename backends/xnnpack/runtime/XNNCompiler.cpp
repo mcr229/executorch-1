@@ -1432,7 +1432,9 @@ __ET_NODISCARD Error XNNCompiler::compileModel(
 
   auto flatbuffer_graph = fb_xnnpack::GetXNNGraph(buffer_pointer);
   // initialize xnnpack
+  ET_LOG(Error, "before initialize");
   xnn_status status = xnn_initialize(/*allocator =*/nullptr);
+  ET_LOG(Error, "after initialize");
   ET_CHECK_OR_RETURN_ERROR(
       xnn_status_success == status,
       Internal,
@@ -1441,6 +1443,7 @@ __ET_NODISCARD Error XNNCompiler::compileModel(
 
   // create xnnpack subgraph
   xnn_subgraph_t subgraph_ptr = nullptr;
+  ET_LOG(Error, "before xnn_create_subgraph");
   status = xnn_create_subgraph(
       /*external_value_ids=*/flatbuffer_graph->num_externs(),
       /*flags=*/0,

@@ -220,26 +220,54 @@ runtime.cxx_binary(
 )
 
 runtime.genrule(
+    name = "python_headers_gen",
+    out = "include",
+    srcs = ["link_python.sh"],
+    bash = "bash $SRCS $OUT",
+)
+
+runtime.cxx_library(
+    name = "python_headers",
+    exported_deps = [":python_headers_gen"],
+)
+
+runtime.cxx_library(
+    name = "pybind11",
+    public_include_directories = [
+        "pybind11/include",
+    ],
+    exported_preprocessor_flags = [
+        "-I$(location :python_headers_gen)",  # include header directories
+    ],
+    exported_deps = [":python_headers"],
+    raw_headers = glob(["pybind11/include/**/*.h"]),
+    visibility = ["PUBLIC"],
+    _is_external_target = True,
+)
+
+runtime.genrule(
     name = "libtorch_gen",
     outs = select({
         "ovr_config//os:macos": {
             "libtorch": ["libtorch.dylib"],
             "libc10": ["libc10.dylib"],
             "libtorch_cpu": ["libtorch_cpu.dylib"],
+            "libtorch_python": ["libtorch_python.dylib"],
             "include": ["include"],
         },
         "DEFAULT": {
             "libtorch": ["libtorch.so"],
             "libc10": ["libc10.so"],
             "libtorch_cpu": ["libtorch_cpu.so"],
+            "libtorch_python": ["libtorch_python.so"],
             "include": ["include"],
         },
     }),
     default_outs = ["."],
     srcs = ["link_torch.sh"],
     bash = select({
-        "ovr_config//os:macos": "bash $SRCS -f torch/lib/libtorch.dylib,torch/lib/libtorch_cpu.dylib,torch/lib/libc10.dylib,torch/include -o ${OUT}",
-        "DEFAULT": "bash $SRCS -f torch/lib/libtorch.so,torch/lib/libtorch_cpu.so,torch/lib/libc10.so,torch/include -o ${OUT}",
+        "ovr_config//os:macos": "bash $SRCS -f torch/lib/libtorch.dylib,torch/lib/libtorch_cpu.dylib,torch/lib/libtorch_python.dylib,torch/lib/libc10.dylib,torch/include -o ${OUT}",
+        "DEFAULT": "bash $SRCS -f torch/lib/libtorch.so,torch/lib/libtorch_cpu.so,torch/lib/libtorch_python.so,torch/lib/libc10.so,torch/include -o ${OUT}",
     }),
 )
 
@@ -269,6 +297,25 @@ prebuilt_cxx_library(
     exported_deps = [
         ":libc10",
         ":libtorch_cpu",
+    ],
+    visibility = ["PUBLIC"],
+)
+
+prebuilt_cxx_library(
+    name = "libtorch_python",
+    shared_lib = ":libtorch_gen[libtorch_python]",
+    exported_preprocessor_flags = [
+        "-D_GLIBCXX_USE_CXX11_ABI=0",  # `libtorch` is built without CXX11_ABI so any target depends on it need to use the same build config.
+        "-I$(location :libtorch_gen[include])",  # include header directories
+        "-I$(location :libtorch_gen[include])/torch/csrc/api/include",  # include header directories
+    ],
+    exported_linker_flags = select({
+        "ovr_config//os:macos": ["-Xlinker", "-rpath", "$(location :libtorch_gen)", "-Xlinker"],
+        "DEFAULT": ["-Wl,-rpath,$(location :libtorch_gen)"],  # define rpath to locate shared library
+    }),
+    exported_headers = [":libtorch_gen[include]"],
+    exported_deps = [
+        ":libtorch",
     ],
     visibility = ["PUBLIC"],
 )

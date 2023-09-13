@@ -32,8 +32,9 @@ _EXTERNAL_DEPS = {
     "gmock": "//third-party:gmock",
     "gtest": "//third-party:gtest",
     "libtorch": "//third-party:libtorch",
+    "libtorch_python": "//third-party:libtorch_python",
     "prettytable": "//third-party:prettytable",
-    "pybind11": [],  # TODO(larryliu0820): Add support
+    "pybind11": "//third-party:pybind11",
     # Core C++ PyTorch functionality like Tensor and ScalarType.
     "torch-core-cpp": [],  # TODO(larryliu0820): Add support
     "torchgen": "//third-party:torchgen",
@@ -111,6 +112,7 @@ def _remove_platform_specific_args(kwargs):
 def _remove_unsupported_kwargs(kwargs):
     """Removes environment unsupported kwargs
     """
+    kwargs.pop("tags", None)  # tags = ["long_running"] doesn't work in oss
     kwargs.pop("types", None)  # will have to find a different way to handle .pyi files in oss
     return kwargs
 

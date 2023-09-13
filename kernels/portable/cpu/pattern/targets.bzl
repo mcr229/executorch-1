@@ -25,4 +25,5 @@ def define_common_targets():
             "//executorch/runtime/kernel:kernel_includes",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/optimized/cpu/..."],
+        force_static = True,
     )

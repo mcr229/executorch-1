@@ -29,6 +29,7 @@ def define_common_targets():
             "//executorch/...",
             "@EXECUTORCH_CLIENTS",
         ],
+        force_static = True,
         exported_deps = [
             "//executorch/runtime/core:core",
             "//executorch/runtime/platform:compiler",
@@ -45,6 +46,7 @@ def define_common_targets():
                 "//executorch/...",
                 "@EXECUTORCH_CLIENTS",
             ],
+            force_static = True,
             deps = [
                 "//executorch/runtime/core/exec_aten/util:dim_order_util" + aten_suffix,
                 "//executorch/schema:bundled_program_schema",

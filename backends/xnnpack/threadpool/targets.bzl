@@ -39,4 +39,5 @@ def define_common_targets():
             "//executorch/extension/threadpool/test/...",
             "@EXECUTORCH_CLIENTS",
         ],
+        force_static = True,
     )

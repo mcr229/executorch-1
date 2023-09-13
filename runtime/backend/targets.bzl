@@ -19,6 +19,7 @@ def define_common_targets():
                 "backend_init_context.h",
                 "backend_registry.h",
             ],
+            force_static = True,
             preprocessor_flags = ["-DUSE_ATEN_LIB"] if aten_mode else [],
             visibility = [
                 "//executorch/...",

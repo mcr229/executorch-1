@@ -1,7 +1,7 @@
 #load("@fbsource//xplat/executorch/build:runtime_wrapper.bzl", "runtime")
 load("@fbcode_macros//build_defs:python_library.bzl", "python_library")
 
-python_library(
+runtime.python_library(
     name = "lib",
     srcs = [
         "__init__.py",
@@ -14,7 +14,7 @@ python_library(
     ],
 )
 
-python_library(
+runtime.python_library(
     name = "addmm_mm_to_linear",
     srcs = ["addmm_mm_to_linear.py"],
     deps = [

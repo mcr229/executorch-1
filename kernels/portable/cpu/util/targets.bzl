@@ -19,6 +19,7 @@ def define_common_targets():
         ],
         compiler_flags = ["-Wno-missing-prototypes"],
         visibility = ["//executorch/kernels/portable/cpu/..."],
+        force_static = True,
     )
 
     runtime.cxx_library(
@@ -35,6 +36,7 @@ def define_common_targets():
             "//executorch/runtime/core/exec_aten/util:tensor_util",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/optimized/cpu/..."],
+        force_static = True,
     )
 
     runtime.cxx_library(
@@ -48,6 +50,7 @@ def define_common_targets():
             "//executorch/runtime/kernel:kernel_includes",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/optimized/cpu/..."],
+        force_static = True,
     )
 
     runtime.cxx_library(
@@ -61,6 +64,7 @@ def define_common_targets():
             "//executorch/runtime/kernel:kernel_includes",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/optimized/cpu/..."],
+        force_static = True,
     )
 
     runtime.cxx_library(
@@ -76,6 +80,7 @@ def define_common_targets():
             "//executorch/kernels/portable/cpu:scalar_utils",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/optimized/cpu/..."],
+        force_static = True,
     )
 
     runtime.cxx_library(
@@ -89,6 +94,7 @@ def define_common_targets():
             "//executorch/runtime/kernel:kernel_includes",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/optimized/cpu/..."],
+        force_static = True,
     )
 
     runtime.cxx_library(
@@ -114,6 +120,7 @@ def define_common_targets():
             "//executorch/runtime/core/exec_aten/util:tensor_util",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/quantized/..."],
+        force_static = True,
     )
 
     # Utility functions that can be used by operators that repeat the same computation for each element in the tensor
@@ -140,4 +147,5 @@ def define_common_targets():
             "//executorch/runtime/core/exec_aten/util:tensor_util",
         ],
         visibility = ["//executorch/kernels/portable/cpu/...", "//executorch/kernels/quantized/..."],
+        force_static = True,
     )

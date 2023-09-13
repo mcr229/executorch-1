@@ -72,6 +72,7 @@ def define_common_targets():
                 "evalue.h",
             ],
             srcs = ["evalue.cpp"],
+            force_static = True,
             visibility = [
                 "//executorch/...",
                 "@EXECUTORCH_CLIENTS",

@@ -483,6 +483,7 @@ def executorch_generated_lib(
             # of //executorch.
             _is_external_target = True,
             platforms = platforms,
+            force_static = True,
         )
 
     if custom_ops_yaml_target:
