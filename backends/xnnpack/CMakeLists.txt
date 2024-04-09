@@ -114,3 +114,7 @@ install(
   DESTINATION lib
   INCLUDES
   DESTINATION ${_common_include_directories})
+
+add_executable(xnn_experiment "${EXECUTORCH_ROOT}/backends/xnnpack/xnn_experiment.cpp")
+target_link_libraries(xnn_experiment XNNPACK pthreadpool cpuinfo)
+target_compile_options(xnn_experiment PUBLIC ${_common_compile_options})
